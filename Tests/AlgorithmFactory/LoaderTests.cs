@@ -24,7 +24,7 @@ namespace QuantConnect.Tests.AlgorithmFactory
     [TestFixture]
     public class LoaderTests
     {
-        [Test, Ignore]
+        [Test]
         public void LoadsSamePythonAlgorithmTwice()
         {
             var assemblyPath = "../../../Algorithm.Python/BasicTemplateAlgorithm.py";
@@ -42,7 +42,7 @@ namespace QuantConnect.Tests.AlgorithmFactory
             Assert.AreNotEqual(algorithm1.ToString(), algorithm2.ToString());
         }
 
-        [Test, Ignore]
+        [Test]
         public void LoadsTwoDifferentPythonAlgorithm()
         {
             var assemblyPath1 = "../../../Algorithm.Python/BasicTemplateAlgorithm.py";
