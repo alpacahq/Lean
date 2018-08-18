@@ -156,6 +156,7 @@
     <Compile Include="API\Compile.cs" />
     <Compile Include="API\CompileState.cs" />
     <Compile Include="API\BacktestReport.cs" />
+    <Compile Include="API\Dividends.cs" />
     <Compile Include="API\Link.cs" />
     <Compile Include="API\LiveAlgorithm.cs" />
     <Compile Include="API\LiveAlgorithmResults.cs" />
@@ -166,15 +167,20 @@
     <Compile Include="API\Project.cs" />
     <Compile Include="API\ProjectFile.cs" />
     <Compile Include="API\RestResponse.cs" />
+    <Compile Include="API\Split.cs" />
     <Compile Include="Benchmarks\FuncBenchmark.cs" />
     <Compile Include="Benchmarks\IBenchmark.cs" />
     <Compile Include="Benchmarks\SecurityBenchmark.cs" />
     <Compile Include="Brokerages\BrokerageFactoryAttribute.cs" />
     <Compile Include="Brokerages\BrokerageName.cs" />
+    <Compile Include="Brokerages\AlpacaBrokerageModel.cs" />
     <Compile Include="Brokerages\DefaultBrokerageMessageHandler.cs" />
     <Compile Include="Brokerages\DefaultBrokerageModel.cs" />
     <Compile Include="Brokerages\FxcmBrokerageModel.cs" />
     <Compile Include="Brokerages\GDAXBrokerageModel.cs" />
+    <Compile Include="Chart.cs" />
+    <Compile Include="ChartPoint.cs" />
+    <Compile Include="Series.cs" />
     <Compile Include="Data\Custom\Intrinio\IntrinioConfig.cs" />
     <Compile Include="Data\Custom\Intrinio\IntrinioEconomicData.cs" />
     <Compile Include="Data\Custom\Intrinio\EconomicDataSources.cs" />
@@ -195,6 +201,7 @@
     <Compile Include="Exceptions\ScheduledEventExceptionInterpreter.cs" />
     <Compile Include="Exceptions\UnsupportedOperandPythonExceptionInterpreter.cs" />
     <Compile Include="Interfaces\IAlgorithmSettings.cs" />
+    <Compile Include="Interfaces\IPriceProvider.cs" />
     <Compile Include="Interfaces\IFutureChainProvider.cs" />
     <Compile Include="Interfaces\IRegressionAlgorithmDefinition.cs" />
     <Compile Include="Interfaces\ITimeInForceHandler.cs" />
@@ -500,7 +507,6 @@
     <Compile Include="Data\Consolidators\IdentityDataConsolidator.cs" />
     <Compile Include="Data\Consolidators\SequentialConsolidator.cs" />
     <Compile Include="Data\Consolidators\TradeBarConsolidator.cs" />
-    <Compile Include="Charting.cs" />
     <Compile Include="Orders\OrderEvent.cs" />
     <Compile Include="Packets\AlgorithmNodePacket.cs" />
     <Compile Include="Packets\AlgorithmStatusPacket.cs" />
@@ -581,6 +587,7 @@
     <Compile Include="Util\BusyBlockingCollection.cs" />
     <Compile Include="Util\CircularQueue.cs" />
     <Compile Include="Util\Composer.cs" />
+    <Compile Include="Util\DateTimeJsonConverter.cs" />
     <Compile Include="Util\DisposableExtensions.cs" />
     <Compile Include="Util\DoubleUnixSecondsDateTimeJsonConverter.cs" />
     <Compile Include="Util\EnumeratorExtensions.cs" />
@@ -600,6 +607,7 @@
     <Compile Include="Util\RateGate.cs" />
     <Compile Include="Util\SecurityExtensions.cs" />
     <Compile Include="Util\SecurityIdentifierJsonConverter.cs" />
+    <Compile Include="Util\StreamReaderEnumerable.cs" />
     <Compile Include="Util\TypeChangeJsonConverter.cs" />
     <Compile Include="Util\LinqExtensions.cs" />
     <Compile Include="Util\MemoizingEnumerable.cs" />

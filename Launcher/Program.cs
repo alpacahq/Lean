@@ -35,6 +35,7 @@ namespace QuantConnect.Lean.Launcher
 
         static void Main(string[] args)
         {
+
             //Initialize:
             var mode = "RELEASE";
             #if DEBUG
@@ -109,8 +110,8 @@ namespace QuantConnect.Lean.Launcher
                 Process.Start(info);
             }
 
-            // if the job version doesn't match this instance version then we can't process it
-            // we also don't want to reprocess redelivered jobs
+             //if the job version doesn't match this instance version then we can't process it
+             //we also don't want to reprocess redelivered jobs
             if (VersionHelper.IsNotEqualVersion(job.Version) || job.Redelivered)
             {
                 Log.Error("Engine.Run(): Job Version: " + job.Version + "  Deployed Version: " + Globals.Version + " Redelivered: " + job.Redelivered);
@@ -138,7 +139,7 @@ namespace QuantConnect.Lean.Launcher
                 leanEngineSystemHandlers.JobQueue.AcknowledgeJob(job);
                 Log.Trace("Engine.Main(): Packet removed from queue: " + job.AlgorithmId);
 
-                // clean up resources
+                 //clean up resources
                 leanEngineSystemHandlers.Dispose();
                 leanEngineAlgorithmHandlers.Dispose();
                 Log.LogHandler.Dispose();

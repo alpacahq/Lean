@@ -55,6 +55,7 @@ namespace QuantConnect
             Tuple.Create(HitBTC, 19),
             Tuple.Create(OkCoin, 20),
             Tuple.Create(Bitstamp, 21),
+
         };
 
         static Market()
@@ -174,12 +175,18 @@ namespace QuantConnect
         /// </summary>
         public const string Bittrex = "bittrex";
 
-        /// <summary>
-        /// Adds the specified market to the map of available markets with the specified identifier.
-        /// </summary>
-        /// <param name="market">The market string to add</param>
-        /// <param name="identifier">The identifier for the market, this value must be positive and less than 1000</param>
-        public static void Add(string market, int identifier)
+
+		/// <summary>
+		/// Alpaca Market
+		/// </summary>
+		public const string Alpaca = "alpaca";
+
+		/// <summary>
+		/// Adds the specified market to the map of available markets with the specified identifier.
+		/// </summary>
+		/// <param name="market">The market string to add</param>
+		/// <param name="identifier">The identifier for the market, this value must be positive and less than 1000</param>
+		public static void Add(string market, int identifier)
         {
             if (identifier >= MaxMarketIdentifier)
             {

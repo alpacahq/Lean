@@ -609,7 +609,7 @@ namespace QuantConnect.Tests.API
             Assert.AreEqual(pricesList.Prices.Count, 1);
 
             var price = pricesList.Prices.First();
-            Assert.AreEqual(price.Symbol, spy.ID.ToString());
+            Assert.AreEqual(price.Symbol, spy);
             Assert.AreNotEqual(price.Price, 0);
             var updated = price.Updated;
             var reference = DateTime.UtcNow.Subtract(TimeSpan.FromDays(3));
@@ -630,8 +630,8 @@ namespace QuantConnect.Tests.API
             Assert.AreEqual(pricesList.Prices.Count, 2);
 
             Assert.IsTrue(pricesList.Prices.All(x => x.Price != 0));
-            Assert.AreEqual(pricesList.Prices.Count(x => x.Symbol == aapl.ID.ToString()), 1);
-            Assert.AreEqual(pricesList.Prices.Count(x => x.Symbol == spy.ID.ToString()), 1);
+            Assert.AreEqual(pricesList.Prices.Count(x => x.Symbol == aapl), 1);
+            Assert.AreEqual(pricesList.Prices.Count(x => x.Symbol == spy), 1);
 
             var reference = DateTime.UtcNow.Subtract(TimeSpan.FromDays(3));
             Assert.IsTrue(pricesList.Prices.All(x => x.Updated > reference));
@@ -690,6 +690,31 @@ namespace QuantConnect.Tests.API
             var projectName = DateTime.UtcNow.ToString("u") + " Test " + _testAccount + " Lang " + language;
 
             Perform_CreateCompileBactest_Tests(projectName, language, algorithmName, code);
+        }
+
+        [Test]
+        public void GetsSplits()
+        {
+            var date = new DateTime(2014, 06, 09);
+            var AAPL = new Symbol(SecurityIdentifier.Parse("AAPL R735QTJ8XC9X"), "AAPL");
+            var splits = _api.GetSplits(date, date);
+            var aapl = splits.Single(s => s.Symbol == AAPL);
+            Assert.AreEqual((1 / 7m).RoundToSignificantDigits(6), aapl.SplitFactor);
+            Assert.AreEqual(date, aapl.Time);
+            Assert.AreEqual(SplitType.SplitOccurred, aapl.Type);
+            Assert.AreEqual(645.57m, aapl.ReferencePrice);
+        }
+
+        [Test]
+        public void GetDividends()
+        {
+            var date = new DateTime(2018, 05, 11);
+            var AAPL = new Symbol(SecurityIdentifier.Parse("AAPL R735QTJ8XC9X"), "AAPL");
+            var dividends = _api.GetDividends(date, date);
+            var aapl = dividends.Single(s => s.Symbol == AAPL);
+            Assert.AreEqual(0.73m, aapl.Distribution);
+            Assert.AreEqual(date, aapl.Time);
+            Assert.AreEqual(190.03m, aapl.ReferencePrice);
         }
 
         private void Perform_CreateCompileBactest_Tests(string projectName, Language language, string algorithmName, string code)
