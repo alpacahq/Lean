@@ -88,6 +88,9 @@
     </Compile>
     <Compile Include="AddRemoveOptionUniverseRegressionAlgorithm.cs" />
     <Compile Include="AddRemoveSecurityRegressionAlgorithm.cs" />
+    <Compile Include="Alphas\ForexCalendarAlpha.cs" />
+    <Compile Include="Alphas\RebalancingLeveragedETFAlpha.cs" />
+    <Compile Include="BasicTemplateFuturesFrameworkAlgorithm.cs" />
     <Compile Include="BasicTemplateOptionsFrameworkAlgorithm.cs" />
     <Compile Include="BlackLittermanPortfolioOptimizationFrameworkAlgorithm.cs" />
     <Compile Include="MeanVarianceOptimizationFrameworkAlgorithm.cs" />
@@ -142,7 +145,7 @@
     <Compile Include="BasicTemplateForexAlgorithm.cs" />
     <Compile Include="BasicTemplateAlgorithm.cs" />
     <Compile Include="BasicTemplateOptionsAlgorithm.cs" />
-    <Compile Include="CoarseFundamentalTop5Algorithm.cs" />
+    <Compile Include="CoarseFundamentalTop3Algorithm.cs" />
     <Compile Include="CustomBenchmarkAlgorithm.cs" />
     <Compile Include="CustomBrokerageMessageHandlerAlgorithm.cs" />
     <Compile Include="FractionalQuantityRegressionAlgorithm.cs" />

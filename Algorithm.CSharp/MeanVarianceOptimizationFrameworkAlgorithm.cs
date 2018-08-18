@@ -1,4 +1,4 @@
-﻿/*
+/*
  * QUANTCONNECT.COM - Democratizing Finance, Empowering Individuals.
  * Lean Algorithmic Trading Engine v2.0. Copyright 2014 QuantConnect Corporation.
  *
@@ -46,7 +46,7 @@ namespace QuantConnect.Algorithm.CSharp
             // Forex, CFD, Equities Resolutions: Tick, Second, Minute, Hour, Daily.
             // Futures Resolution: Tick, Second, Minute
             // Options Resolution: Minute Only.
-            
+
             // set algorithm framework models
             SetUniverseSelection(new CoarseFundamentalUniverseSelectionModel(CoarseSelector));
             SetAlpha(new HistoricalReturnsAlphaModel(resolution: Resolution.Daily));
@@ -73,38 +73,38 @@ namespace QuantConnect.Algorithm.CSharp
         /// </summary>
         public Dictionary<string, string> ExpectedStatistics => new Dictionary<string, string>
         {
-            {"Total Trades", "11"},
+            {"Total Trades", "10"},
             {"Average Win", "0.50%"},
             {"Average Loss", "-0.14%"},
-            {"Compounding Annual Return", "564.274%"},
+            {"Compounding Annual Return", "573.292%"},
             {"Drawdown", "0.600%"},
             {"Expectancy", "1.248"},
-            {"Net Profit", "2.628%"},
-            {"Sharpe Ratio", "8.542"},
+            {"Net Profit", "2.647%"},
+            {"Sharpe Ratio", "8.544"},
             {"Loss Rate", "50%"},
             {"Win Rate", "50%"},
             {"Profit-Loss Ratio", "3.50"},
             {"Alpha", "0"},
-            {"Beta", "95.538"},
+            {"Beta", "96.224"},
             {"Annual Standard Deviation", "0.129"},
             {"Annual Variance", "0.017"},
-            {"Information Ratio", "8.459"},
+            {"Information Ratio", "8.462"},
             {"Tracking Error", "0.129"},
             {"Treynor Ratio", "0.011"},
-            {"Total Fees", "$23.99"},
+            {"Total Fees", "$23.04"},
             {"Total Insights Generated", "14"},
-            {"Total Insights Closed", "4"},
-            {"Total Insights Analysis Completed", "0"},
+            {"Total Insights Closed", "11"},
+            {"Total Insights Analysis Completed", "11"},
             {"Long Insight Count", "6"},
             {"Short Insight Count", "4"},
             {"Long/Short Ratio", "150.0%"},
-            {"Estimated Monthly Alpha Value", "$0"},
-            {"Total Accumulated Estimated Alpha Value", "$0"},
-            {"Mean Population Estimated Insight Value", "$0"},
-            {"Mean Population Direction", "0%"},
-            {"Mean Population Magnitude", "0%"},
-            {"Rolling Averaged Population Direction", "0%"},
-            {"Rolling Averaged Population Magnitude", "0%"}
+            {"Estimated Monthly Alpha Value", "$-85612.32"},
+            {"Total Accumulated Estimated Alpha Value", "$-14744.34"},
+            {"Mean Population Estimated Insight Value", "$-1340.395"},
+            {"Mean Population Direction", "27.2727%"},
+            {"Mean Population Magnitude", "27.2727%"},
+            {"Rolling Averaged Population Direction", "5.8237%"},
+            {"Rolling Averaged Population Magnitude", "5.8237%"}
         };
     }
 }

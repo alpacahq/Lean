@@ -1,4 +1,4 @@
-﻿/*
+/*
  * QUANTCONNECT.COM - Democratizing Finance, Empowering Individuals.
  * Lean Algorithmic Trading Engine v2.0. Copyright 2014 QuantConnect Corporation.
  *
@@ -61,7 +61,7 @@ namespace QuantConnect.Algorithm.CSharp
             return _symbols.Take(last);
         }
 
-        public bool CanRunLocally => true;        
+        public bool CanRunLocally => true;
 
         /// <summary>
         /// This is used by the regression test system to indicate which languages this algorithm is written in.
@@ -76,7 +76,7 @@ namespace QuantConnect.Algorithm.CSharp
             {"Total Trades", "11"},
             {"Average Win", "0.12%"},
             {"Average Loss", "0%"},
-            {"Compounding Annual Return", "1365.948%"},
+            {"Compounding Annual Return", "1366.273%"},
             {"Drawdown", "0.800%"},
             {"Expectancy", "0"},
             {"Net Profit", "3.747%"},
@@ -85,26 +85,26 @@ namespace QuantConnect.Algorithm.CSharp
             {"Win Rate", "100%"},
             {"Profit-Loss Ratio", "0"},
             {"Alpha", "0"},
-            {"Beta", "135.767"},
+            {"Beta", "135.779"},
             {"Annual Standard Deviation", "0.168"},
             {"Annual Variance", "0.028"},
             {"Information Ratio", "9.21"},
             {"Tracking Error", "0.168"},
             {"Treynor Ratio", "0.011"},
             {"Total Fees", "$23.61"},
-            {"Estimated Monthly Alpha Value", "$0"},
             {"Total Insights Generated", "14"},
-            {"Total Insights Closed", "4"},
-            {"Total Insights Analysis Completed", "0"},
+            {"Total Insights Closed", "11"},
+            {"Total Insights Analysis Completed", "11"},
             {"Long Insight Count", "6"},
             {"Short Insight Count", "4"},
             {"Long/Short Ratio", "150.0%"},
-            {"Total Accumulated Estimated Alpha Value", "$0"},
-            {"Mean Population Estimated Insight Value", "$0"},
-            {"Mean Population Direction", "0%"},
-            {"Mean Population Magnitude", "0%"},
-            {"Rolling Averaged Population Direction", "0%"},
-            {"Rolling Averaged Population Magnitude", "0%"}
+            {"Estimated Monthly Alpha Value", "$-85612.32"},
+            {"Total Accumulated Estimated Alpha Value", "$-14744.34"},
+            {"Mean Population Estimated Insight Value", "$-1340.395"},
+            {"Mean Population Direction", "27.2727%"},
+            {"Mean Population Magnitude", "27.2727%"},
+            {"Rolling Averaged Population Direction", "5.8237%"},
+            {"Rolling Averaged Population Magnitude", "5.8237%"}
         };
     }
 }

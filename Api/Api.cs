@@ -14,9 +14,12 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
 using QuantConnect.API;
+using QuantConnect.Data.Market;
 using QuantConnect.Interfaces;
 using QuantConnect.Orders;
 using RestSharp;
@@ -583,6 +586,32 @@ namespace QuantConnect.Api
         }
 
         /// <summary>
+        /// Will get the prices for requested symbols
+        /// </summary>
+        /// <param name="symbols">Symbols for which the price is requested</param>
+        /// <returns><see cref="Prices"/></returns>
+        public PricesList ReadPrices(IEnumerable<Symbol> symbols)
+        {
+            var symbolByID = new Dictionary<string, Symbol>();
+            foreach (var symbol in symbols)
+            {
+                symbolByID[symbol.ID.ToString()] = symbol;
+            }
+
+            var request = new RestRequest("prices", Method.POST);
+            var symbolsToRequest = string.Join(",", symbolByID.Keys);
+            request.AddParameter("symbols", symbolsToRequest);
+
+            PricesList pricesList;
+            ApiConnection.TryRequest(request, out pricesList);
+            foreach (var price in pricesList.Prices)
+            {
+                price.Symbol = symbolByID[price.SymbolID];
+            }
+            return pricesList;
+        }
+
+        /// <summary>
         /// Method to download and save the data purchased through QuantConnect
         /// </summary>
         /// <param name="symbol">Symbol of security of which data will be requested.</param>
@@ -670,6 +699,53 @@ namespace QuantConnect.Api
         public virtual void SendUserEmail(string algorithmId, string subject, string body)
         {
             //
+        }
+
+        /// <summary>
+        /// Gets all split events between the specified times. From and to are inclusive.
+        /// </summary>
+        /// <param name="from">The first date to get splits for</param>
+        /// <param name="to">The last date to get splits for</param>
+        /// <returns>A list of all splits in the specified range</returns>
+        public List<Data.Market.Split> GetSplits(DateTime from, DateTime to)
+        {
+            var request = new RestRequest("splits", Method.POST);
+            request.AddParameter("from", from.ToString("yyyyMMdd"));
+            request.AddParameter("to", from.ToString("yyyyMMdd"));
+
+            SplitList splits;
+            ApiConnection.TryRequest(request, out splits);
+
+            return splits.Splits.Select(s => new Data.Market.Split(
+                s.Symbol,
+                s.Date,
+                s.ReferencePrice,
+                s.SplitFactor,
+                SplitType.SplitOccurred)
+            ).ToList();
+        }
+
+        /// <summary>
+        /// Gets all dividend events between the specified times. From and to are inclusive.
+        /// </summary>
+        /// <param name="from">The first date to get dividend for</param>
+        /// <param name="to">The last date to get dividend for</param>
+        /// <returns>A list of all dividend in the specified range</returns>
+        public List<Data.Market.Dividend> GetDividends(DateTime from, DateTime to)
+        {
+            var request = new RestRequest("dividends", Method.POST);
+            request.AddParameter("from", from.ToString("yyyyMMdd"));
+            request.AddParameter("to", from.ToString("yyyyMMdd"));
+
+            DividendList dividends;
+            ApiConnection.TryRequest(request, out dividends);
+
+            return dividends.Dividends.Select(s => new Data.Market.Dividend(
+                s.Symbol,
+                s.Date,
+                s.DividendPerShare,
+                s.ReferencePrice)
+            ).ToList();
         }
 
         /// <summary>

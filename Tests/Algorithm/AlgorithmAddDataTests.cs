@@ -1,4 +1,19 @@
-﻿using System;
+﻿/*
+ * QUANTCONNECT.COM - Democratizing Finance, Empowering Individuals.
+ * Lean Algorithmic Trading Engine v2.0. Copyright 2014 QuantConnect Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
@@ -21,7 +36,6 @@ using HistoryRequest = QuantConnect.Data.HistoryRequest;
 
 namespace QuantConnect.Tests.Algorithm
 {
-
     [TestFixture]
     public class AlgorithmAddDataTests
     {
@@ -128,12 +142,33 @@ namespace QuantConnect.Tests.Algorithm
             Assert.AreEqual(data2.Price, 3);
         }
 
-        [Test, Ignore]
+        [Test]
+        public void OnEndOfTimeStepDoesNotThrowWhenSeedsSameUnderlyingForTwoSecurities()
+        {
+            var qcAlgorithm = new QCAlgorithm();
+            qcAlgorithm.SetLiveMode(true);
+            var testHistoryProvider = new TestHistoryProvider();
+            qcAlgorithm.HistoryProvider = testHistoryProvider;
+            var option = qcAlgorithm.AddOption(testHistoryProvider.underlyingSymbol);
+
+            var symbol = Symbol.CreateOption(testHistoryProvider.underlyingSymbol, Market.USA, OptionStyle.American,
+                OptionRight.Call, 1, new DateTime(2015, 12, 24));
+            var symbol2 = Symbol.CreateOption(testHistoryProvider.underlyingSymbol, Market.USA, OptionStyle.American,
+                OptionRight.Put, 1, new DateTime(2015, 12, 24));
+
+            var optionContract = qcAlgorithm.AddOptionContract(symbol, Resolution.Daily);
+            var optionContract2 = qcAlgorithm.AddOptionContract(symbol2, Resolution.Minute);
+
+            qcAlgorithm.OnEndOfTimeStep();
+            var data = qcAlgorithm.Securities[testHistoryProvider.underlyingSymbol].GetLastData();
+            Assert.AreEqual(testHistoryProvider.LastResolutionRequest, Resolution.Minute);
+            Assert.IsNotNull(data);
+            Assert.AreEqual(data.Price, 2);
+        }
+
+        [Test]
         public void PythonCustomDataTypes_AreAddedToSubscriptions_Successfully()
         {
-            var pythonPath = new System.IO.DirectoryInfo("RegressionAlgorithms");
-            Environment.SetEnvironmentVariable("PYTHONPATH", pythonPath.FullName);
-
             var qcAlgorithm = new AlgorithmPythonWrapper("Test_CustomDataAlgorithm");
 
             // Initialize contains the statements:
@@ -154,12 +189,9 @@ namespace QuantConnect.Tests.Algorithm
             Assert.DoesNotThrow(() => quandlFactory.GetSource(quandlSubscription, DateTime.UtcNow, false));
         }
 
-        [Test, Ignore]
+        [Test]
         public void PythonCustomDataTypes_AreAddedToConsolidator_Successfully()
         {
-            var pythonPath = new System.IO.DirectoryInfo("RegressionAlgorithms");
-            Environment.SetEnvironmentVariable("PYTHONPATH", pythonPath.FullName);
-
             var qcAlgorithm = new AlgorithmPythonWrapper("Test_CustomDataAlgorithm");
 
             // Initialize contains the statements:
@@ -187,6 +219,7 @@ namespace QuantConnect.Tests.Algorithm
             public string underlyingSymbol = "GOOG";
             public string underlyingSymbol2 = "AAPL";
             public int DataPointCount { get; }
+            public Resolution LastResolutionRequest;
             public void Initialize(AlgorithmNodePacket job, IDataProvider dataProvider, IDataCacheProvider dataCacheProvider,
                 IMapFileProvider mapFileProvider, IFactorFileProvider factorFileProvider, Action<int> statusUpdate)
             {
@@ -196,6 +229,7 @@ namespace QuantConnect.Tests.Algorithm
             public IEnumerable<Slice> GetHistory(IEnumerable<HistoryRequest> requests, DateTimeZone sliceTimeZone)
             {
                 var now = DateTime.UtcNow;
+                LastResolutionRequest = requests.First().Resolution;
                 var tradeBar1 = new TradeBar(now, underlyingSymbol, 1, 1, 1, 1, 1, TimeSpan.FromDays(1));
                 var tradeBar2 = new TradeBar(now, underlyingSymbol2, 3, 3, 3, 3, 3, TimeSpan.FromDays(1));
                 var slice1 = new Slice(now, new List<BaseData> { tradeBar1, tradeBar2 },
